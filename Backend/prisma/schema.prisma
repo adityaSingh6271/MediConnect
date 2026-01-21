@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Doctor {
+  id                String         @id @default(uuid())
+  name              String
+  specialty         String
+  email             String         @unique
+  phone             String         @unique
+  yearsOfExperience Float
+  profilePic        String?
+  password          String
+  consultations     Consultation[]
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+}
+
+model Patient {
+  id               String         @id @default(uuid())
+  name             String
+  age              Int
+  email            String         @unique
+  phone            String         @unique
+  profilePic       String?
+  password         String
+  historyOfSurgery String?
+  historyOfIllness String?        // Comma-separated
+  consultations    Consultation[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model Consultation {
+  id                    String        @id @default(uuid())
+  patientId             String
+  doctorId              String
+  currentIllnessHistory String
+  recentSurgery         String?
+  isDiabetic            Boolean
+  allergies             String?
+  others                String?
+  transactionId         String
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  patient      Patient       @relation(fields: [patientId], references: [id])
+  doctor       Doctor        @relation(fields: [doctorId], references: [id])
+  prescription Prescription?
+}
+
+model Prescription {
+  id             String       @id @default(uuid())
+  consultationId String       @unique
+  careToBeTaken  String
+  medicines      String       // JSON or comma-separated? Let's use string for simplicity as per requirement "Simple buttons/Neutrals"
+  pdfUrl         String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  consultation Consultation @relation(fields: [consultationId], references: [id])
+}
