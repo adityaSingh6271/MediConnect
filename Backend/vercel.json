@@ -1,9 +1,6 @@
 {
     "installCommand": "npm install --legacy-peer-deps",
     "version": 2,
-    "supportedNodeIdes": {
-        "node": "20.x"
-    },
     "builds": [
         {
             "src": "src/index.ts",
