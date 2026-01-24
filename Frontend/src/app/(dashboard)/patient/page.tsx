@@ -119,11 +119,22 @@ export default function PatientDashboard() {
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <Button size="sm" className="bg-white text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-200 shadow-sm transition-all rounded-lg shrink-0" asChild>
-                                                                <a href={`http://localhost:5001${consultation.prescription.pdfUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                                                                <a
+                                                                    href={consultation.prescription.pdfUrl}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                >
                                                                     View PDF
                                                                 </a>
+
                                                             </Button>
-                                                            <Button size="sm" variant="ghost" className="text-blue-500 px-2" onClick={() => downloadFile(`http://localhost:5001${consultation.prescription.pdfUrl}`, `My-Prescription-${new Date(consultation.createdAt).toLocaleDateString()}.pdf`)} title="Download PDF">
+                                                            <Button size="sm" variant="ghost" className="text-blue-500 px-2" onClick={() =>
+                                                                downloadFile(
+                                                                    consultation.prescription.pdfUrl,
+                                                                    `My-Prescription-${new Date(consultation.createdAt).toLocaleDateString()}.pdf`
+                                                                )
+                                                            }
+                                                                title="Download PDF">
                                                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                                                 </svg>

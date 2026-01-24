@@ -119,11 +119,22 @@ export default function DoctorDashboard() {
                                         {consultation.prescription?.pdfUrl && (
                                             <div className="flex gap-2">
                                                 <Button size="lg" variant="outline" className="border-gray-200 rounded-xl px-8" asChild>
-                                                    <a href={`http://localhost:5001${consultation.prescription.pdfUrl}`} target="_blank" rel="noreferrer">
+                                                    <a
+                                                        href={consultation.prescription.pdfUrl}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                    >
                                                         View PDF
                                                     </a>
+
                                                 </Button>
-                                                <Button size="lg" variant="ghost" className="rounded-xl px-4 text-blue-600" onClick={() => downloadFile(`http://localhost:5001${consultation.prescription.pdfUrl}`, `Prescription-${consultation.patient.name.replace(/\s+/g, '-')}.pdf`)} title="Download PDF">
+                                                <Button size="lg" variant="ghost" className="rounded-xl px-4 text-blue-600" onClick={() =>
+                                                    downloadFile(
+                                                        consultation.prescription.pdfUrl,
+                                                        `My-Prescription-${new Date(consultation.createdAt).toLocaleDateString()}.pdf`
+                                                    )
+                                                }
+                                                    title="Download PDF">
                                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                                     </svg>
