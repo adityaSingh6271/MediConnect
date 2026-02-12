@@ -5,7 +5,7 @@ import { z } from "zod";
 import PDFDocument from "pdfkit";
 import { PassThrough } from "stream";
 import supabase from "../utils/supabase";
-
+     
 const prescriptionSchema = z.object({
     consultationId: z.string(),
     careToBeTaken: z.string(),
