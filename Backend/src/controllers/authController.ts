@@ -64,12 +64,10 @@ export const doctorSignup = async (req: Request, res: Response) => {
       process.env.JWT_SECRET!,
       { expiresIn: "1d" },
     );
-    res
-      .status(201)
-      .json({
-        token,
-        user: { id: doctor.id, name: doctor.name, role: "DOCTOR" },
-      });
+    res.status(201).json({
+      token,
+      user: { id: doctor.id, name: doctor.name, role: "DOCTOR" },
+    });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
@@ -110,13 +108,17 @@ export const patientSignup = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    const profilePic = req.file ? `/uploads/${req.file.filename}` : undefined;
+    let profilePicUrl: string | undefined;
+
+    if (req.file) {
+      profilePicUrl = await uploadProfileImage(req.file, "patients");
+    }
 
     const patient = await prisma.patient.create({
       data: {
         ...data,
         password: hashedPassword,
-        profilePic: profilePic || data.profilePic,
+        profilePic: profilePicUrl,
       },
     });
 
@@ -125,12 +127,10 @@ export const patientSignup = async (req: Request, res: Response) => {
       process.env.JWT_SECRET!,
       { expiresIn: "1d" },
     );
-    res
-      .status(201)
-      .json({
-        token,
-        user: { id: patient.id, name: patient.name, role: "PATIENT" },
-      });
+    res.status(201).json({
+      token,
+      user: { id: patient.id, name: patient.name, role: "PATIENT" },
+    });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }

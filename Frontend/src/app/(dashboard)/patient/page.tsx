@@ -93,15 +93,15 @@ export default function PatientDashboard() {
                 <CardHeader className="p-0">
                   <div className="h-32 bg-linear-to-r from-blue-500 to-blue-600 relative">
                     <div className="absolute -bottom-10 left-6 w-20 h-20 rounded-2xl border-4 border-white overflow-hidden bg-gray-100 shadow-md">
-                      {profile?.profilePic ? (
+                      {doctor.profilePic ? (
                         <img
-                          src={profile.profilePic}
-                          alt={profile?.name || "Profile"}
+                          src={doctor.profilePic}
+                          alt={doctor.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
                         <span className="text-2xl font-bold text-blue-400">
-                          {profile?.name?.charAt(0)}
+                          {doctor.name.charAt(0)}
                         </span>
                       )}
                     </div>
